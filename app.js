@@ -1,10 +1,19 @@
 const express = require("express");
-const userRouter = require('./routes/user')
+require("./db");
+const userRouter = require('./routes/user');
 const app = express();
 
-app.use(userRouter)
+app.use(express.json())
+app.use('/api/user',userRouter)
 
-app.get('/about',(req,res)=>{
+
+app.post('/sign-in',(req,res,next)=>{
+    const {email,password} = req.body;
+    if(!email || !password){
+        res.json({error:"email or password wrong"});
+    }
+    next();
+},(req,res)=>{
     res.send("<h1>Hello i am your backend about</h1>")
 });
 

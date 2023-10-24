@@ -33,4 +33,11 @@ userSchema.pre('save',async function(next){
 });    //before saving the schemaa file i mean newUser.save() in user controller class  code should be hashed
 //this means password of the user from new user object from user controller
 
+userSchema.methods.comparePassword = async function(password)
+{
+    const result = await bcrypt.compare(password,this.password);
+    return result;
+};
+
+
 module.exports = mongoose.model("user",userSchema);
